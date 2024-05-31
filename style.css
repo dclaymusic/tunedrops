@@ -1,0 +1,82 @@
+html, body { margin: 0; }
+
+body
+{
+    display: flex;
+    align-items: flex-start;
+    user-select: none;
+}
+
+#loadscreen {
+    text-align: center;
+    width: 1060px;
+    height: 700px;
+    background-color: #FFFBF3;
+    border: 1px solid black;
+}
+
+#loadscreen, button, #canvas {     
+    cursor: pointer;
+}
+
+button, body
+{
+    font-family: monospace;
+}
+
+button
+{
+    margin: 1px;
+    border: 2px solid transparent;
+    font-size: 0.8rem;
+}
+
+#w,#solid,#ball { border: 2px solid rgba(0,0,0,0.7); }
+
+canvas { margin: 1px; }
+
+#modeselect > button { margin-top: 15px; }
+
+#left {
+    display: flex;
+    flex-direction: column;
+    /* justify-content: start; */
+    /* align-items: start; */
+}
+
+#left > div { margin: 0; }
+#left > p, p { margin-bottom: 0; text-align: center; }
+
+
+/* This is bad form, put it down here to cancel out others */
+#left, #canvas, #modeselect, #startbutton {
+    display: none;
+}
+
+.buttondiv {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+#percussionbuttons,#metalbuttons {
+    display: none;
+}
+
+#bodydiv, #instdiv, #texturediv {
+    display: flex;
+    flex-direction: row;
+    justify-content: stretch;
+}
+
+button:hover {
+    background-color:lightgray;
+}
+
+#challengebutton {
+    color: darkgrey;
+    cursor: not-allowed;
+}
+
+#cover { width: 500px; }
+h1 { margin-top: 70px; }

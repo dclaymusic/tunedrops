@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>TUNE DROPS</title>
+        <script type="text/javascript" src="matter.js"></script>
+        <script type="text/javascript" src="drawing.js"></script>
+        <script type="text/javascript" src="start.js"></script>
+        <script type="text/javascript" src="challenge.js"></script>
+        <script type="text/javascript" src="composer.js"></script>
+        <script type="text/javascript" src="mouse.js"></script>
+        <script type="text/javascript" src="save.js"></script>
+        <script type="text/javascript" src="keys.js"></script>
+        <script type="text/javascript" src="snd.js"></script>
+        <script type="text/javascript" src="metronome.js"></script>
+
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+
+        <div id="loadscreen" onclick="startGame()">
+            <h1>TuneDrops</h1>
+            <img id="cover" src="cover.png">
+            <h4>Super-Secret Test Version for 5-2, because you're awesome.</h4>
+            <p id="loadtext">Click anywhere to load sounds.</p>
+            <div id="modeselect">
+                <button id="challengebutton" onclick="toggleMode(0)">Challenge Mode</button>
+                <button id="composerbutton" onclick="toggleMode(1)">Composer Mode</button>
+                <p id="modetext">Solve puzzles.</p>
+                <button onclick="toPlayScreen()" id="startbutton">Start</button>
+            </div>
+        </div>
+
+        <div id="left">
+            <div id="bodyselect" class="buttondiv">
+                <button id="ball" onclick="toggleType('ball')">Ball</button>
+                <button id="eraser" onclick="toggleType('eraser')">Eraser</button>
+            </div>
+            <div id="textureselect" class="buttondiv">
+                <p>Texture</p>
+                <div id="texturediv">
+                    <button id="solid" onclick="toggleTransparency(false)">Solid</button>
+                    <button id="transparent" onclick="toggleTransparency(true)">Transparent</button>
+                </div>
+            </div>
+            <div id="instrumentselect" class="buttondiv">
+                <p>Instrument</p>
+                <div id="instdiv">
+                    <button id="w" onclick="toggleInstrument('w')">Wood</button>
+                    <button id="m" onclick="toggleInstrument('m')">Metal</button>
+                    <button id="p" onclick="toggleInstrument('p')">Perc</button>
+                </div>    
+            </div>
+            <p>Pitches</p>
+            <div id="woodbuttons" class="buttondiv">
+                <button id="w1" onclick="toggleType('w1')">C</button>
+                <button id="w2" onclick="toggleType('w2')">D</button>
+                <button id="w3" onclick="toggleType('w3')">E</button>
+                <button id="w4" onclick="toggleType('w4')">F</button>
+                <button id="w5" onclick="toggleType('w5')">G</button>
+                <button id="w6" onclick="toggleType('w6')">A</button>
+                <button id="w7" onclick="toggleType('w7')">B</button>
+                <button id="w8" onclick="toggleType('w8')">c'</button>
+                <button id="w9" onclick="toggleType('w9')">d'</button>
+                <button id="w10" onclick="toggleType('w10')">e'</button>
+                <button id="w11" onclick="toggleType('w11')">f'</button>
+                <button id="w12" onclick="toggleType('w12')">g'</button>
+                <button id="w13" onclick="toggleType('w13')">a'</button>
+                <button id="w14" onclick="toggleType('w14')">b'</button>
+            </div>
+            <div id="metalbuttons" class="buttondiv">
+                <button id="m1" onclick="toggleType('m1')">C</button>
+                <button id="m2" onclick="toggleType('m2')">D</button>
+                <button id="m3" onclick="toggleType('m3')">E</button>
+                <button id="m4" onclick="toggleType('m4')">F</button>
+                <button id="m5" onclick="toggleType('m5')">G</button>
+                <button id="m6" onclick="toggleType('m6')">A</button>
+                <button id="m7" onclick="toggleType('m7')">B</button>
+                <button id="m8" onclick="toggleType('m8')">c'</button>
+                <button id="m9" onclick="toggleType('m9')">d'</button>
+                <button id="m10" onclick="toggleType('m10')">e'</button>
+                <button id="m11" onclick="toggleType('m11')">f'</button>
+                <button id="m12" onclick="toggleType('m12')">g'</button>
+                <button id="m13" onclick="toggleType('m13')">a'</button>
+                <button id="m14" onclick="toggleType('m14')">b'</button>
+            </div>
+            <div id="percussionbuttons" class="buttondiv">
+                <button id="p1" onclick="toggleType('p1')">o</button>
+                <button id="p2" onclick="toggleType('p2')">x</button>
+                <button id="p3" onclick="toggleType('p3')">+</button>
+                <button id="p4" onclick="toggleType('p4')">◊</button>
+                <button id="p5" onclick="toggleType('p5')">*</button>
+                <button id="p6" onclick="toggleType('p6')">~</button>
+                <button id="p7" onclick="toggleType('p7')">≈</button>
+                <button id="p8" onclick="toggleType('p8')">«</button>
+                <button id="p9" onclick="toggleType('p9')">»</button>
+                <button id="p10" onclick="toggleType('p10')">#</button>
+                <button id="p11" onclick="toggleType('p11')">≠</button>
+                <button id="p12" onclick="toggleType('p12')">ø</button>
+                <button id="p13" onclick="toggleType('p13')">≡</button>
+                <button id="p14" onclick="toggleType('p14')">⌂</button>
+            </div>
+            <p>Timer</p>
+            <div id="tempodiv">
+                <label for="tempo">
+                Tempo:
+                </label>
+                <input onchange="changeTempo()" type="number" step="1" id="tempo" min="60" max="999" value="120" />
+            </div>
+            <div id="timerselect">
+
+                <button id="t1" onclick="toggleType('t1')">1</button>
+                <button id="t2" onclick="toggleType('t2')">2</button>
+                <button id="t3" onclick="toggleType('t3')">3</button>
+                <button id="t4" onclick="toggleType('t4')">4</button>
+                
+            </div>
+            <button id="sync" onclick="syncTimers()">Pause</button>
+            <button id="clear" onclick="clearAll()">Clear All</button>
+            <!-- <p id="mouse">Mouse:<br>[0, 0]</p> -->
+            <button id="save" onclick="saveState('file')">Save File</button>
+            <button id="load" onclick="loadState('file')">Load File</button>
+        </div>
+        
+        <canvas id="canvas" width="900" height="700"></canvas>
+    </body>
+    <script type="text/javascript">
+
+        let boxW = 60, boxH = 20; circleR = 7;
+        let timerW = 40, timerH = 20;
+        let gridSize = 20;
+        let instPrefix = 'w';
+        let lastIndex = 1;
+        let type = 'ball';
+        let mousePos = [];
+        let transparency = false;
+        let activeDeg = 0;
+        let timersOn = true;
+        let collisionRecord = [[]];
+        let ballToggle = true;
+        let pastState = [];
+        let savedStates = [];
+        let mode = null;
+        let mouseOn = false; //so a ball doesn't drop when you activate screen
+
+        //index 1 = ball id#
+            //index 2 = [framerate since impact, impact gradients [startrgb][endrgb], objects being hit id# tagged as "true" or "false"]
+        const colors = [
+            [[241,102,103],[249,192,195]],  //c
+            [[237,161,58],[254,201,136]],   //d
+            [[248,238,85],[255,249,196]],   //e
+            [[104,191,103],[193,224,178]],  //f
+            [[110,203,210],[202,234,241]],  //g
+            [[138,141,197],[196,198,228]],  //a
+            [[219,164,203],[248,221,235]]]  //b
+        
+        buttonColors(); 
+
+        let font = '14px Andale Mono'
+
+        const text = { 
+            //wood
+            'w1': 'C', 'w2': 'D', 'w3': 'E','w4': 'F', 'w5': 'G', 'w6': 'A', 'w7': 'B',
+            'w8': "c'",'w9': "d'",'w10': "e'",'w11': "f'",'w12': "g'",'w13': "a'",'w14': "b'",
+            //metal
+            'm1': 'C','m2': 'D','m3': 'E','m4': 'F','m5': 'G','m6': 'A','m7': 'B',
+            'm8': "c'",'m9': "d'",'m10': "e'",'m11': "f'",'m12': "g'",'m13': "a'",'m14': "b'",
+            //percussion
+            'p1': 'o','p2': 'x','p3': '+','p4': '◊','p5': '*','p6': '~','p7': '≈',
+            'p8': "«",'p9': "»",'p10': "#",'p11': "≠",'p12': "ø",'p13': "≡",'p14': "⌂",
+            //timers
+            't1':'1','t2':'2','t3':'3','t4':'4'
+
+
+        }
+
+        var hasStarted = false;
+        var infoWindow = false;
+        var isPlaying = false;
+        var allBuffersLoaded = false;
+        var tempo = 500;
+        var timers = [];
+        var t;
+
+        var currentSecond = 0, frameCount = 0, framesLastSecond = 0, lastFrameTime = 0;
+
+        //init canvas
+        const canvas = document.querySelector("canvas");
+        const ctx = canvas.getContext("2d");
+        const engine = Matter.Engine.create(); 
+
+        //mouse constraint for matter.js
+        const mouseConstraint = Matter.MouseConstraint.create(
+        engine, {
+            element: canvas,
+        }
+        );
+
+        Matter.Composite.add(
+        engine.world, [mouseConstraint]
+        );
+
+        ////////////////////////////game loop
+        (function rerender() {
+
+            var currentFrameTime = Date.now();
+            var timeElapsed = currentFrameTime - lastFrameTime;
+            var sec = Math.floor(Date.now()/1000);
+            if(sec!=currentSecond)
+            {
+                currentSecond = sec;
+                framesLastSecond = frameCount;
+                frameCount = 1;
+            }
+            else { frameCount++; }
+
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = '#FFFBF3';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        drawGridlines();
+        arrowInstructions();
+
+
+
+        //get a list of every body on screen
+        let allBodies = Matter.Composite.allBodies(engine.world);
+
+        //iterate through it     
+        for(let i = 0; i < allBodies.length; i++)
+        {
+            //establish colors
+            let thisColor = findColor(allBodies[i]);
+
+            if(collisionRecord[allBodies[i].id] == undefined) { collisionRecord[allBodies[i].id] = []; }
+            //iterate through all bodies in relationship to each body
+            for(let j = 0; j < allBodies.length; j++)
+            {
+                if(allBodies[i].label == 'Circle Body' && (allBodies[j].label == 'Rectangle Body' && allBodies[j].tag[0] != 't'))
+                {
+                
+                    // //original collision detection
+                    // //if 2 bodies collide, the collision record records the id of those bodies as:
+                    // //[circle body][rectangle body] = true (they are touching) or false (they are not touching)
+                    // //the issue with this is that rolling bodies on a surface still kind of bounce and move...
+                    // //...so the true/false values alternate and create extra sounds.
+                    // //...so to get just one sound, a s
+                    // if(Matter.Collision.collides(allBodies[i], allBodies[j]) != null)
+                    // {
+                    //     //if they are touching but the value was false or nonexistent, then a sound is played
+                    //     if(collisionRecord[allBodies[i].id][allBodies[j].id] != true)
+                    //     {
+                    //         //impact
+                    //         console.log('boom');
+                    //     }
+                    //     //then it's marked as true, so that no further sounds are played
+                    //     collisionRecord[allBodies[i].id][allBodies[j].id] = true;
+                    // }
+                    // else
+                    // { collisionRecord[allBodies[i].id][allBodies[j].id] = false; }
+
+
+                    if(Matter.Collision.collides(allBodies[i], allBodies[j]) != null)
+                    {
+                        //if they are touching but the value was false or nonexistent, then a sound is played
+                        if(collisionRecord[allBodies[i].id][allBodies[j].id] != true)
+                        {
+                            //establish colors
+                            let thatColor = findColor(allBodies[j]);
+
+                            //impact - SOUNDS GO HERE
+                            selectSnd(allBodies[j].tag);
+                            // collisionRecord[allBodies[j].id][0] = 0; //start framecount
+                            // if(collisionRecord[allBodies[j].id][1] == undefined) { collisionRecord[allBodies[j].id][1] = []; }
+                            collisionRecord[allBodies[j].id][1] = [thatColor[0][0],thatColor[0][1],thatColor[0][2]];
+                        }
+                        //then it's marked as true, so that no further sounds are played
+                        collisionRecord[allBodies[i].id][allBodies[j].id] = true;
+                    }
+                    // { collisionRecord[allBodies[i].id][allBodies[j].id] = false; }
+                }
+            }
+
+            //color control for impact bodies
+            if(allBodies[i].label == 'Rectangle Body' && allBodies[i].tag[0] != 't')
+            {
+                //iterate through RGB
+                for(let c = 0; c < 3; c++)
+                {
+                    if(thisColor[0][c] < thisColor[1][c]) 
+                    { 
+                        if(collisionRecord[allBodies[i].id][1][c] >= thisColor[1][c])
+                        {
+                            collisionRecord[allBodies[i].id][1][c] = thisColor[1][c];
+                        }
+                        else { collisionRecord[allBodies[i].id][1][c] += 1; }
+                    }
+                    else
+                    {
+                        if(collisionRecord[allBodies[i].id][1][c] <= thisColor[1][c])
+                        {
+                            collisionRecord[allBodies[i].id][1][c] = thisColor[1][c];
+                        }
+                        else { collisionRecord[allBodies[i].id][1][c] -= 1; }
+                    }
+                }
+                
+                //assign adjusted color
+                let alpha;
+                if(allBodies[i].isTransparent) { alpha = 0.7; } else { alpha = 1; }
+                ctx.fillStyle = `rgba(${collisionRecord[allBodies[i].id][1][0]},${collisionRecord[allBodies[i].id][1][1]},${collisionRecord[allBodies[i].id][1][2]},${alpha})`;
+            }
+            else
+            {
+                ctx.fillStyle = 'black';
+            }
+
+            //remove out of bounds
+            if(allBodies[i].position.x >= canvas.width || allBodies[i].position.y >= canvas.height)
+            { Matter.Composite.remove(engine.world, allBodies[i]); }
+
+            //draw current bodies
+            
+            renderVertices(allBodies[i]);
+        }
+
+        //re-draw timer shapes to overlap balls
+        for(let i = 0; i < allBodies.length; i++)
+        {
+            if(allBodies[i].label != 'Circle Body')
+            {
+                ctx.fillStyle = 'black';
+                if(allBodies[i].tag[0] == 't') { renderVertices(allBodies[i]); }
+            }
+        }
+
+        drawHoverOver(mousePos[0],mousePos[1]);
+
+        lastFrameTime = currentFrameTime;
+
+        // frameRate();
+
+        Matter.Engine.update(engine);
+        requestAnimationFrame(rerender);
+        })();
+
+
+    </script>
+</html>
